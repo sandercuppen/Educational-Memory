@@ -16,11 +16,49 @@
 
         /* --- Screen Instructions Styling --- */
         .screen-instructions {
-            padding: 20px;
-            background-color: #fff;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-            margin-bottom: 30px;
-            border-radius: 8px;
+            padding: 28px 28px 22px 28px;
+            background: linear-gradient(120deg, #e6fffa 0%, #f8fafc 100%);
+            border: 1.5px solid #c6f6d5;
+            box-shadow: 0 4px 24px 0 rgba(56, 178, 172, 0.08), 0 1.5px 6px 0 rgba(0,0,0,0.06);
+            margin-bottom: 36px;
+            border-radius: 14px;
+            position: relative;
+        }
+        .screen-instructions::before {
+            content: "\f06c";
+            font-family: 'Font Awesome 6 Free';
+            font-weight: 900;
+            color: #38B2AC;
+            font-size: 2.2em;
+            position: absolute;
+            left: 22px;
+            top: 22px;
+            opacity: 0.18;
+            pointer-events: none;
+        }
+        .screen-instructions h1 {
+            font-size: 1.6em;
+            color: #22543d;
+            margin-top: 0;
+            margin-bottom: 16px;
+            font-weight: 700;
+            letter-spacing: 0.01em;
+        }
+        .screen-instructions p {
+            font-size: 1.08em;
+            margin-bottom: 12px;
+            margin-top: 0;
+            color: #234e52;
+        }
+        .screen-instructions ol, .screen-instructions ul {
+            padding-left: 1.3em;
+            margin-bottom: 12px;
+            margin-top: 0;
+        }
+        .screen-instructions li {
+            margin-bottom: 6px;
+            font-size: 1em;
+            color: #285e61;
         }
          /* Style for links in instructions */
         .screen-instructions a {
@@ -216,7 +254,7 @@
 <body>
 
     <div class="screen-instructions">
-        <h1>Bewerkbaar Memorie Spel Afbraaktijd Afval (20 Paren)</h1>
+        <h1>Eco Memorie: Educatief spel met afbraaktijd van afval (20 Paren)</h1>
         <p>Combineer het afvalitem met de tijd die het nodig heeft om af te breken!</p>
         <p><strong>Nieuw - Drag & Drop Afbeeldingen:</strong> Je kunt nu een PNG- of JPG-afbeelding van je computer direct op een kaartje slepen om het icoontje te vervangen! </p>
         <p><strong>LET OP:</strong> Afbeeldingen die je via drag & drop toevoegt zijn **TIJDELIJK** en worden **NIET OPGESLAGEN** in de code. Als je de pagina ververst of sluit, zijn ze weg. Dit is handig om snel te testen voor het printen.</p>
@@ -233,7 +271,17 @@
             <li><strong>Voor Dubbelzijdig Printen:</strong> Print dit hele document met de dubbelzijdige instelling van uw printer. Kies 'Omdraaien langs lange zijde'. **Zorg ervoor dat 'Achtergronden afdrukken' (of 'Background graphics') is ingeschakeld!**</li>
             <li><strong>Voor Enkelzijdig Printen:</strong> Print alle pagina's (met achtergronden ingeschakeld). Knip de kaarten uit. Lijm de bijbehorende voor- en achterkanten aan elkaar.</li>
         </ul>
-        <p><small>Indien je een cartoon-afbeelding van Vecteezy gebruikt voor de achterkant, gelieve de volgende bronvermelding te behouden: <a href="https://www.vecteezy.com/free-vector/earth-cartoon" target="_blank" rel="noopener noreferrer">Earth Cartoon Vectors by Vecteezy</a></small></p>
+
+        <div style="margin: 18px 0; padding: 12px; background: #f0f4f8; border-radius: 6px; border-left: 4px solid #38B2AC;">
+          <strong>Licenties & Bronvermelding:</strong>
+          <ul style="margin-top: 8px;">
+            <li><b>Font Awesome Free:</b> Iconen worden geladen via CDN. Licentie: <a href="https://fontawesome.com/license/free" target="_blank" rel="noopener noreferrer">https://fontawesome.com/license/free</a> (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License)</li>
+            <li><b>Vecteezy:</b> Indien je cartoon-afbeeldingen van Vecteezy gebruikt (zoals voorgesteld voor de achterkant), is de volgende bronvermelding vereist volgens hun gratis licentie:<br>
+                <a href="https://www.vecteezy.com/free-vector/earth-cartoon" target="_blank" rel="noopener noreferrer">Earth Cartoon Vectors by Vecteezy</a>
+            </li>
+          </ul>
+        </div>
+
         <hr>
     </div>
 
