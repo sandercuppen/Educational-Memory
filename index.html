@@ -1,0 +1,491 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bewerkbaar Memorie Spel Afbraaktijd Afval - Drag & Drop</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" integrity="sha512-SnH5WK+bZxgPHs44uWIX+LLJAJ9/2PkPKZ5QiAj6Ta86w+fsb2TkcmfRyVX3pBnMFcV7oQPJkl9QevSCWr3W6A==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <style>
+        /* --- General Body Styling --- */
+        body {
+            font-family: sans-serif;
+            margin: 20px;
+            background-color: #f4f4f4; /* Light background for screen view */
+            color: #333;
+        }
+
+        /* --- Screen Instructions Styling --- */
+        .screen-instructions {
+            padding: 20px;
+            background-color: #fff;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            margin-bottom: 30px;
+            border-radius: 8px;
+        }
+         /* Style for links in instructions */
+        .screen-instructions a {
+            color: #3182ce; /* Blue link color */
+            text-decoration: underline;
+        }
+         .screen-instructions a:hover {
+            color: #2c5282; /* Darker blue on hover */
+        }
+
+
+        /* --- Card Grid Styling --- */
+        .card-grid {
+            display: grid;
+            /* Responsive grid for screen view */
+            grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+            gap: 15px; /* Space between cards */
+            padding: 10px; /* Padding around grid */
+        }
+
+        /* --- Individual Card Styling --- */
+        .card {
+            width: 120px; /* Card width for screen */
+            height: 160px; /* Card height for screen */
+            border: 2px solid #8B4513; /* Brown border */
+            border-radius: 8px;
+            overflow: hidden;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            box-sizing: border-box;
+            padding: 10px;
+            position: relative; /* Needed for potential overlays or absolute positioning */
+        }
+
+        /* --- Specific Styling for Front Cards --- */
+        .card.card-front-content {
+             /* Fresher light mint green background */
+             background-color: #e6fffa;
+             /* Updated icon color to darker teal */
+             color: #38B2AC;
+             flex-direction: column;
+             justify-content: space-evenly; /* Adjust spacing */
+             align-items: center;
+             font-size: 2.8em; /* Base size for icon */
+             transition: background-color 0.2s ease; /* Smooth transition for drag over */
+        }
+
+        /* Style for the text label on front cards */
+        .card-front-content .card-text {
+            font-size: 0.4em; /* Relative size for text */
+            font-weight: bold;
+            margin-top: 5px; /* Reduced margin */
+            display: block;
+            line-height: 1.2;
+            min-height: 1.5em; /* Ensure space for editing */
+            cursor: text; /* Indicate text is editable */
+            color: #555; /* Keep text color dark grey */
+            z-index: 1; /* Ensure text is above image if overlap occurs */
+        }
+
+        /* Style for the icon element on front cards */
+        .card-front-content i {
+             /* Add subtle text shadow to icon */
+             text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.2);
+             /* Icon is no longer directly editable */
+             margin-bottom: 5px; /* Space below icon */
+        }
+
+        /* Styling for the image container/area */
+        .card-front-content .image-area {
+            width: 80%;
+            height: 60%; /* Adjust height */
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin-bottom: 5px;
+            position: relative; /* For potential absolute positioning inside */
+        }
+
+        /* Styling for images (default icon or user-added) */
+        .card-front-content .image-area i,
+        .card-front-content .image-area img {
+            max-width: 100%;
+            max-height: 100%;
+            object-fit: contain; /* Keep aspect ratio */
+        }
+
+        /* Style for drag-over effect */
+        .card.card-front-content.drag-over {
+            background-color: #bee3f8; /* Light blue background */
+            border-style: dashed;
+            border-color: #3182ce;
+        }
+
+
+        /* --- Specific Styling for Back Cards --- */
+        .card.card-back-content {
+            /* Adjusted gradient direction to vertical */
+            background-image: linear-gradient(to bottom, #4FD1C5, #38B2AC);
+            color: #fff; /* White icon */
+            /* Font size for emoji */
+            font-size: 3em;
+        }
+
+        /* --- Print Styles (Optimized for A4 paper) --- */
+        @media print {
+            body {
+                background-color: #fff; /* White page background */
+                margin: 0;
+                padding: 0;
+                color: #000; /* Default print text color */
+                /* Crucial for printing backgrounds/colors */
+                -webkit-print-color-adjust: exact;
+                print-color-adjust: exact;
+            }
+
+            .screen-instructions { display: none; }
+
+            /* Apply print margins/layout to the grid containers */
+            .card-grid {
+                padding: 10mm; /* A4 margins */
+                margin: 0 auto; /* Center */
+                width: 190mm; /* Approx width within A4 margins */
+                display: grid;
+                grid-template-columns: repeat(4, 1fr); /* 4 columns */
+                gap: 5mm; /* Gap for cutting */
+            }
+
+            /* Ensure page break before the back grid */
+            #grid-backs {
+                page-break-before: always;
+            }
+
+            /* Style individual cards for print */
+            .card {
+                width: auto; /* Grid determines width */
+                height: 60mm; /* Card height */
+                border: 1px dashed #999; /* Cutting guides */
+                border-radius: 3mm;
+                page-break-inside: avoid; /* Try to keep cards on one page */
+                padding: 5px;
+                box-sizing: border-box;
+                overflow: hidden; /* Prevent content overflow */
+            }
+
+             /* Style Front cards for print - KEEP COLORS */
+             .card.card-front-content {
+                font-size: 2.5em; /* Adjust icon size */
+                /* Keep background color for print */
+                 background-color: #e6fffa !important;
+                 /* Keep icon color for print */
+                 color: #38B2AC !important;
+                 border-color: #8B4513 !important; /* Keep original border color */
+             }
+             /* Style icon specifically for print - KEEP SHADOW */
+              .card.card-front-content .image-area i {
+                  /* Keep shadow for print */
+                  text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.2);
+              }
+              /* Ensure images print well */
+               .card.card-front-content .image-area img {
+                   display: block; /* Ensure image displays correctly */
+               }
+
+
+             /* Style text on front cards for print - KEEP COLOR */
+             .card.card-front-content .card-text {
+                 font-size: 0.4em; /* Adjust text size */
+                 margin-top: 5px;
+                 /* Keep text color for print */
+                 color: #555 !important;
+             }
+             /* Hide potential editing outlines during print */
+             [contenteditable]:focus {
+                 outline: none;
+             }
+
+
+            /* Style Back cards for print */
+            .card.card-back-content {
+                 /* Ensure adjusted gradient prints */
+                 background-image: linear-gradient(to bottom, #4FD1C5, #38B2AC) !important;
+                 color: #fff !important;
+                 /* Emoji size for print */
+                 font-size: 2.5em;
+                 border-color: #8B4513 !important; /* Keep original border color */
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="screen-instructions">
+        <h1>Bewerkbaar Memorie Spel Afbraaktijd Afval (20 Paren)</h1>
+        <p>Combineer het afvalitem met de tijd die het nodig heeft om af te breken!</p>
+        <p><strong>Nieuw - Drag & Drop Afbeeldingen:</strong> Je kunt nu een PNG- of JPG-afbeelding van je computer direct op een kaartje slepen om het icoontje te vervangen! </p>
+        <p><strong>LET OP:</strong> Afbeeldingen die je via drag & drop toevoegt zijn **TIJDELIJK** en worden **NIET OPGESLAGEN** in de code. Als je de pagina ververst of sluit, zijn ze weg. Dit is handig om snel te testen voor het printen.</p>
+        <p><strong>Tekst Bewerken:</strong> Je kunt nog steeds de teksten (namen en tijden) aanpassen door erop te klikken en te typen. Deze tekstwijzigingen blijven wel behouden als je ze in de code-editor doet.</p>
+        <p><strong>Permanente Afbeeldingen:</strong> Om afbeeldingen permanent toe te voegen, moet je nog steeds de HTML-code aanpassen en `<img>` tags gebruiken met een link naar de afbeelding (zie commentaar in de code van de eerste kaart).</p>
+        <p>Dit document bevat 20 paren (40 kaarten) klaar om te printen. Vanwege het aantal kaarten worden de voorkanten en achterkanten waarschijnlijk over 3 pagina's per set verdeeld.</p>
+        <ol>
+            <li><strong>Pagina 1-3: Kaart Voorkanten</strong> - Toont icoon/afbeelding + naam OF icoon/afbeelding + afbraaktijd (tekst is bewerkbaar).</li>
+            <li><strong>Pagina 4-6: Kaart Achterkanten</strong> - Toont het ontwerp (🌍) met kleurverloop.</li>
+        </ol>
+        <p><strong>Print Instructies:</strong></p>
+        <ul>
+            <li>Pas eerst de teksten aan zoals gewenst. Sleep eventueel afbeeldingen naar de kaarten.</li>
+            <li><strong>Voor Dubbelzijdig Printen:</strong> Print dit hele document met de dubbelzijdige instelling van uw printer. Kies 'Omdraaien langs lange zijde'. **Zorg ervoor dat 'Achtergronden afdrukken' (of 'Background graphics') is ingeschakeld!**</li>
+            <li><strong>Voor Enkelzijdig Printen:</strong> Print alle pagina's (met achtergronden ingeschakeld). Knip de kaarten uit. Lijm de bijbehorende voor- en achterkanten aan elkaar.</li>
+        </ul>
+        <p><small>Indien je een cartoon-afbeelding van Vecteezy gebruikt voor de achterkant, gelieve de volgende bronvermelding te behouden: <a href="https://www.vecteezy.com/free-vector/earth-cartoon" target="_blank" rel="noopener noreferrer">Earth Cartoon Vectors by Vecteezy</a></small></p>
+        <hr>
+    </div>
+
+    <div class="card-grid" id="grid-fronts">
+        <div class="card card-front-content drop-zone">
+            <div class="image-area"> <i class="fas fa-apple-whole" title="Appelkroosje"></i> </div>
+            <span class="card-text" contenteditable="true">Appelkroosje</span>
+        </div>
+        <div class="card card-front-content drop-zone">
+            <div class="image-area"> <i class="fas fa-apple-whole" title="Appelkroosje"></i> </div>
+            <span class="card-text" contenteditable="true">± 2 Maanden</span>
+        </div>
+        <div class="card card-front-content drop-zone">
+            <div class="image-area"> <i class="fas fa-newspaper" title="Oude Krant"></i> </div>
+            <span class="card-text" contenteditable="true">Oude Krant</span>
+        </div>
+        <div class="card card-front-content drop-zone">
+            <div class="image-area"> <i class="fas fa-newspaper" title="Oude Krant"></i> </div>
+            <span class="card-text" contenteditable="true">± 6 Weken</span>
+        </div>
+        <div class="card card-front-content drop-zone">
+            <div class="image-area"> <i class="fas fa-box-archive" title="Kartonnen Doos"></i> </div>
+            <span class="card-text" contenteditable="true">Kartonnen Doos</span>
+        </div>
+        <div class="card card-front-content drop-zone">
+            <div class="image-area"> <i class="fas fa-box-archive" title="Kartonnen Doos"></i> </div>
+            <span class="card-text" contenteditable="true">± 2 Maanden</span>
+        </div>
+        <div class="card card-front-content drop-zone">
+             <div class="image-area"> <i class="fas fa-bottle-water" title="Plastic Drinkfles"></i> </div>
+            <span class="card-text" contenteditable="true">Plastic Drinkfles</span>
+        </div>
+        <div class="card card-front-content drop-zone">
+             <div class="image-area"> <i class="fas fa-bottle-water" title="Plastic Drinkfles"></i> </div>
+            <span class="card-text" contenteditable="true">± 450 Jaar</span>
+        </div>
+        <div class="card card-front-content drop-zone">
+             <div class="image-area"> <i class="fas fa-wine-bottle" title="Glazen Pot"></i> </div>
+            <span class="card-text" contenteditable="true">Glazen Pot</span>
+        </div>
+        <div class="card card-front-content drop-zone">
+             <div class="image-area"> <i class="fas fa-wine-bottle" title="Glazen Pot"></i> </div>
+            <span class="card-text" contenteditable="true">1 Miljoen+ Jaar</span>
+        </div>
+        <div class="card card-front-content drop-zone">
+             <div class="image-area"> <i class="fas fa-battery-full" title="Lege Batterij"></i> </div>
+            <span class="card-text" contenteditable="true">Lege Batterij</span>
+        </div>
+        <div class="card card-front-content drop-zone">
+             <div class="image-area"> <i class="fas fa-battery-full" title="Lege Batterij"></i> </div>
+            <span class="card-text" contenteditable="true">± 100 Jaar</span>
+        </div>
+        <div class="card card-front-content drop-zone">
+             <div class="image-area"> <i class="fas fa-bag-shopping" title="Plastic Tasje"></i> </div>
+            <span class="card-text" contenteditable="true">Plastic Tasje</span>
+        </div>
+        <div class="card card-front-content drop-zone">
+             <div class="image-area"> <i class="fas fa-bag-shopping" title="Plastic Tasje"></i> </div>
+            <span class="card-text" contenteditable="true">Tientallen Jaren</span>
+        </div>
+         <div class="card card-front-content drop-zone">
+             <div class="image-area"> <i class="fas fa-lightbulb" title="Kapotte Lamp"></i> </div>
+            <span class="card-text" contenteditable="true">Kapotte Lamp</span>
+        </div>
+        <div class="card card-front-content drop-zone">
+             <div class="image-area"> <i class="fas fa-lightbulb" title="Kapotte Lamp"></i> </div>
+            <span class="card-text" contenteditable="true">1 Miljoen+ Jaar</span>
+        </div>
+        <div class="card card-front-content drop-zone">
+             <div class="image-area"> <i class="fas fa-circle" title="Roze Kauwgom"></i> </div>
+            <span class="card-text" contenteditable="true">Roze Kauwgom</span>
+        </div>
+        <div class="card card-front-content drop-zone">
+             <div class="image-area"> <i class="fas fa-circle" title="Roze Kauwgom"></i> </div>
+            <span class="card-text" contenteditable="true">± 5 Jaar</span>
+        </div>
+        <div class="card card-front-content drop-zone">
+             <div class="image-area"> <i class="fas fa-rectangle-list" title="Lege Chipszak"></i> </div>
+            <span class="card-text" contenteditable="true">Lege Chipszak</span>
+        </div>
+        <div class="card card-front-content drop-zone">
+             <div class="image-area"> <i class="fas fa-rectangle-list" title="Lege Chipszak"></i> </div>
+            <span class="card-text" contenteditable="true">± 80 Jaar</span>
+        </div>
+        <div class="card card-front-content drop-zone">
+             <div class="image-area"> <i class="fas fa-box-tissue" title="Papieren Zakdoek"></i> </div>
+            <span class="card-text" contenteditable="true">Papieren Zakdoek</span>
+        </div>
+        <div class="card card-front-content drop-zone">
+             <div class="image-area"> <i class="fas fa-box-tissue" title="Papieren Zakdoek"></i> </div>
+            <span class="card-text" contenteditable="true">± 3 Weken</span>
+        </div>
+        <div class="card card-front-content drop-zone">
+             <div class="image-area"> <i class="fas fa-cube" title="Leeg Drinkpakje"></i> </div>
+            <span class="card-text" contenteditable="true">Leeg Drinkpakje</span>
+        </div>
+        <div class="card card-front-content drop-zone">
+             <div class="image-area"> <i class="fas fa-cube" title="Leeg Drinkpakje"></i> </div>
+            <span class="card-text" contenteditable="true">± 5 Jaar</span>
+        </div>
+        <div class="card card-front-content drop-zone">
+             <div class="image-area"> <i class="fas fa-beer-mug-empty" title="Limonadeblikje"></i> </div>
+            <span class="card-text" contenteditable="true">Limonadeblikje</span>
+        </div>
+        <div class="card card-front-content drop-zone">
+             <div class="image-area"> <i class="fas fa-beer-mug-empty" title="Limonadeblikje"></i> </div>
+            <span class="card-text" contenteditable="true">± 200 Jaar</span>
+        </div>
+        <div class="card card-front-content drop-zone">
+             <div class="image-area"> <i class="fas fa-utensils" title="Plastic Vorkje"></i> </div>
+            <span class="card-text" contenteditable="true">Plastic Vorkje</span>
+        </div>
+        <div class="card card-front-content drop-zone">
+             <div class="image-area"> <i class="fas fa-utensils" title="Plastic Vorkje"></i> </div>
+            <span class="card-text" contenteditable="true">Honderden Jaren</span>
+        </div>
+        <div class="card card-front-content drop-zone">
+             <div class="image-area"> <i class="fas fa-lemon" title="Appelsienschil"></i> </div>
+            <span class="card-text" contenteditable="true">Appelsienschil</span>
+        </div>
+        <div class="card card-front-content drop-zone">
+             <div class="image-area"> <i class="fas fa-lemon" title="Appelsienschil"></i> </div>
+            <span class="card-text" contenteditable="true">± 6 Maanden</span>
+        </div>
+        <div class="card card-front-content drop-zone">
+             <div class="image-area"> <i class="fas fa-shirt" title="Oud T-shirt"></i> </div>
+            <span class="card-text" contenteditable="true">Oud T-shirt</span>
+        </div>
+        <div class="card card-front-content drop-zone">
+             <div class="image-area"> <i class="fas fa-shirt" title="Oud T-shirt"></i> </div>
+            <span class="card-text" contenteditable="true">± 5 Maanden</span>
+        </div>
+        <div class="card card-front-content drop-zone">
+             <div class="image-area"> <i class="fas fa-socks" title="Oude Sok"></i> </div>
+            <span class="card-text" contenteditable="true">Oude Sok</span>
+        </div>
+        <div class="card card-front-content drop-zone">
+             <div class="image-area"> <i class="fas fa-socks" title="Oude Sok"></i> </div>
+            <span class="card-text" contenteditable="true">± 1-5 Jaar</span>
+        </div>
+        <div class="card card-front-content drop-zone">
+             <div class="image-area"> <i class="fas fa-puzzle-piece" title="Lego Blokje"></i> </div>
+            <span class="card-text" contenteditable="true">Lego Blokje</span>
+        </div>
+        <div class="card card-front-content drop-zone">
+             <div class="image-area"> <i class="fas fa-puzzle-piece" title="Lego Blokje"></i> </div>
+            <span class="card-text" contenteditable="true">Honderden Jaren+</span>
+        </div>
+        <div class="card card-front-content drop-zone">
+             <div class="image-area"> <i class="fas fa-grip-lines" title="Zilverpapier"></i> </div>
+            <span class="card-text" contenteditable="true">Zilverpapier</span>
+        </div>
+        <div class="card card-front-content drop-zone">
+             <div class="image-area"> <i class="fas fa-grip-lines" title="Zilverpapier"></i> </div>
+            <span class="card-text" contenteditable="true">Bijna Nooit</span>
+        </div>
+        <div class="card card-front-content drop-zone">
+             <div class="image-area"> <i class="fas fa-fill-drip" title="Leeg Verfblik"></i> </div>
+            <span class="card-text" contenteditable="true">Leeg Verfblik</span>
+        </div>
+        <div class="card card-front-content drop-zone">
+             <div class="image-area"> <i class="fas fa-fill-drip" title="Leeg Verfblik"></i> </div>
+            <span class="card-text" contenteditable="true">± 50 Jaar</span>
+        </div>
+    </div>
+
+
+    <div class="card-grid" id="grid-backs">
+         <div class="card card-back-content">🌍</div> <div class="card card-back-content">🌍</div> <div class="card card-back-content">🌍</div> <div class="card card-back-content">🌍</div>
+         <div class="card card-back-content">🌍</div> <div class="card card-back-content">🌍</div> <div class="card card-back-content">🌍</div> <div class="card card-back-content">🌍</div>
+         <div class="card card-back-content">🌍</div> <div class="card card-back-content">🌍</div> <div class="card card-back-content">🌍</div> <div class="card card-back-content">🌍</div>
+         <div class="card card-back-content">🌍</div> <div class="card card-back-content">🌍</div> <div class="card card-back-content">🌍</div> <div class="card card-back-content">🌍</div>
+         <div class="card card-back-content">🌍</div> <div class="card card-back-content">🌍</div> <div class="card card-back-content">🌍</div> <div class="card card-back-content">🌍</div>
+         <div class="card card-back-content">🌍</div> <div class="card card-back-content">🌍</div> <div class="card card-back-content">🌍</div> <div class="card card-back-content">🌍</div>
+         <div class="card card-back-content">🌍</div> <div class="card card-back-content">🌍</div> <div class="card card-back-content">🌍</div> <div class="card card-back-content">🌍</div>
+         <div class="card card-back-content">🌍</div> <div class="card card-back-content">🌍</div> <div class="card card-back-content">🌍</div> <div class="card card-back-content">🌍</div>
+         <div class="card card-back-content">🌍</div> <div class="card card-back-content">🌍</div> <div class="card card-back-content">🌍</div> <div class="card card-back-content">🌍</div>
+         <div class="card card-back-content">🌍</div> <div class="card card-back-content">🌍</div> <div class="card card-back-content">🌍</div> <div class="card card-back-content">🌍</div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            // Select all potential drop zones (front cards)
+            const dropZones = document.querySelectorAll('.card.card-front-content.drop-zone');
+
+            // Add event listeners to each drop zone
+            dropZones.forEach(zone => {
+                // Prevent default behavior for dragover to allow drop
+                zone.addEventListener('dragover', (e) => {
+                    e.preventDefault();
+                    zone.classList.add('drag-over'); // Add visual feedback
+                    e.dataTransfer.dropEffect = 'copy'; // Indicate copying is allowed
+                });
+
+                // Add visual feedback when dragging enters the zone
+                zone.addEventListener('dragenter', (e) => {
+                    e.preventDefault();
+                    zone.classList.add('drag-over');
+                });
+
+                // Remove visual feedback when dragging leaves the zone
+                zone.addEventListener('dragleave', () => {
+                    zone.classList.remove('drag-over');
+                });
+
+                // Handle the actual drop event
+                zone.addEventListener('drop', (e) => {
+                    e.preventDefault(); // Prevent default action (opening as link)
+                    zone.classList.remove('drag-over'); // Remove visual feedback
+
+                    // Get the dropped file(s)
+                    const files = e.dataTransfer.files;
+                    if (files.length > 0) {
+                        const file = files[0];
+
+                        // Check if the file is an image
+                        if (file.type.startsWith('image/')) {
+                            const reader = new FileReader();
+
+                            // Read the file as a Data URL (base64 encoded)
+                            reader.readAsDataURL(file);
+
+                            // When the file is loaded
+                            reader.onload = () => {
+                                const imgDataUrl = reader.result;
+                                const imageArea = zone.querySelector('.image-area');
+
+                                if (imageArea) {
+                                    // Clear existing content (icon or previous image)
+                                    imageArea.innerHTML = '';
+
+                                    // Create a new image element
+                                    const img = document.createElement('img');
+                                    img.src = imgDataUrl;
+                                    img.alt = 'Gedropte afbeelding'; // Set alt text
+
+                                    // Append the new image
+                                    imageArea.appendChild(img);
+                                }
+                            }
+                             reader.onerror = (error) => {
+                                console.error('Error reading file:', error);
+                                alert('Fout bij het lezen van het bestand.'); // Error message in Dutch
+                            };
+                        } else {
+                            alert('Sleep alstublieft een afbeeldingsbestand (PNG, JPG, etc.).'); // Error message in Dutch
+                        }
+                    }
+                });
+            });
+        });
+    </script>
+
+ </body>
+</html>
