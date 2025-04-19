@@ -38,8 +38,10 @@ Om de standaard icoontjes permanent te vervangen door eigen afbeeldingen:
 
 Dit project is een statische HTML-pagina en kan eenvoudig gehost worden via [GitHub Pages](https://pages.github.com/).
 
-*(Optioneel: Voeg hier een link toe naar je live GitHub Pages demo)*
-*(Optioneel: Voeg hier een screenshot toe)*
+https://sandercuppen.github.io/Memory/
+
+![alt text](image.png)
+
 ## Licentie & Bronvermelding
 
 Dit project wordt uitgegeven onder de **MIT Licentie**. Zie het `LICENSE` bestand voor details.
