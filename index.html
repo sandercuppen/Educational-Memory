@@ -14,28 +14,6 @@
     background: #fff;
     transition: background 0.5s;
 }
-body.bg-teal {
-    background: linear-gradient(120deg, #38B2AC 0%, #4FD1C5 100%);
-    position: relative;
-    transition: background 0.5s;
-}
-body.bg-teal::before {
-    content: ''; /* Earth Globe Europe-Africa emoji */
-    font-size: 13vw;
-    position: fixed;
-    left: 50%;
-    top: 50%;
-    transform: translate(-50%, -50%);
-    opacity: 0.10;
-    pointer-events: none;
-    z-index: 0;
-    background-image: url('public/cartoon-earth.svg');
-background-size: contain;
-background-repeat: no-repeat;
-background-position: center;
-    /* No text-shadow for maximum clarity */
-}
-
 
         /* --- Screen Instructions Styling --- */
         .screen-instructions {
@@ -100,6 +78,21 @@ background-position: center;
             grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
             gap: 15px; /* Space between cards */
             padding: 10px; /* Padding around grid */
+        }
+        .add-outline {
+            background: repeating-linear-gradient(135deg, #e6fffa, #e6fffa 10px, #fff 10px, #fff 20px);
+            position: relative;
+        }
+        .add-outline button {
+            transition: background 0.2s, box-shadow 0.2s;
+        }
+        .add-outline button:active {
+            background: #319795;
+        }
+        @media print {
+            .add-outline, .add-outline-grid {
+                display: none !important;
+            }
         }
 
         /* --- Individual Card Styling --- */
@@ -181,7 +174,7 @@ background-position: center;
 
         /* --- Specific Styling for Back Cards --- */
         .card.card-back-content {
-    background: #fff !important;
+    background: linear-gradient(120deg, #418b92 0%, #b3e9df 100%) !important;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -201,30 +194,9 @@ background-position: center;
     /* No blend mode */
 }
 
-.card.card-back-content.teal-back {
-    background: linear-gradient(120deg, #4ca8b0 0%, #B2F5EA 100%) !important;
-}
-.card.card-back-content.teal-back .back-image {
-    opacity: 0;
-    pointer-events: none;
-}
-.card.card-back-content.teal-back::after {
-    content: ''; /* Earth Globe Europe-Africa emoji */
-    width: 60%;
-height: 60%;
-    position: absolute;
-    left: 50%;
-    top: 50%;
-    transform: translate(-50%, -50%);
-    opacity: 1;
-    pointer-events: none;
-    z-index: 10;
-    background-image: url('public/cartoon-earth.svg');
-background-size: contain;
-background-repeat: no-repeat;
-background-position: center;
-    /* No text-shadow for maximum clarity */
-}
+
+
+
 
             
         /* --- Print Styles (Optimized for A4 paper) --- */
@@ -303,7 +275,6 @@ background-position: center;
 
             /* Style Back cards for print */
             .card.card-back-content {
-    background: #fff !important;
     border-color: #8B4513 !important;
     display: flex;
     align-items: center;
@@ -322,30 +293,7 @@ background-position: center;
     /* No blend mode, no z-index, no position */
 }
 
-.card.card-back-content.teal-back {
-    background: linear-gradient(to bottom, #234E52 0%, #B2F5EA 100%) !important;
-}
-.card.card-back-content.teal-back .back-image {
-    opacity: 0;
-    pointer-events: none;
-}
-.card.card-back-content.teal-back::after {
-    content: ''; /* Earth Globe Europe-Africa emoji */
-    width: 60%;
-height: 60%;
-    position: absolute;
-    left: 50%;
-    top: 50%;
-    transform: translate(-50%, -50%);
-    opacity: 1;
-    pointer-events: none;
-    z-index: 10;
-    background-image: url('public/cartoon-earth.svg');
-background-size: contain;
-background-repeat: no-repeat;
-background-position: center;
-    /* No text-shadow for maximum clarity */
-}
+
 
             
         }
@@ -353,216 +301,226 @@ background-position: center;
 </head>
 <body>
     
+    
 
     <div class="screen-instructions">
-    <button id="toggle-back-card" style="float: right; margin-left: 18px; background: #38B2AC; color: #fff; border: none; border-radius: 6px; padding: 8px 14px; font-size: 1em; cursor: pointer; box-shadow: 0 2px 8px rgba(56,178,172,0.09); transition: background 0.2s;">Wissel achterkant</button>
-        <h1>Eco Memorie: Educatief spel met afbraaktijd van afval (20 Paren)</h1>
+    <div style="display: flex; align-items: center; justify-content: flex-end; margin-bottom: 8px;">
+  <button id="toggle-back-card" style="background: #38B2AC; color: #fff; border: none; border-radius: 6px; padding: 8px 14px; font-size: 1em; cursor: pointer; box-shadow: 0 2px 8px rgba(56,178,172,0.09); transition: background 0.2s;">Wissel achterkant</button>
+</div>
+        <h1>Eco Memorie: Educatief spel met afbraaktijd van afval</h1>
         <p>Combineer het afvalitem met de tijd die het nodig heeft om af te breken!</p>
         <p><strong>Nieuw - Drag & Drop Afbeeldingen:</strong> Je kunt nu een PNG- of JPG-afbeelding van je computer direct op een kaartje slepen om het icoontje te vervangen! </p>
         <p><strong>LET OP:</strong> Afbeeldingen die je via drag & drop toevoegt zijn **TIJDELIJK** en worden **NIET OPGESLAGEN** in de code. Als je de pagina ververst of sluit, zijn ze weg. Dit is handig om snel te testen voor het printen.</p>
         <p><strong>Tekst Bewerken:</strong> Je kunt nog steeds de teksten (namen en tijden) aanpassen door erop te klikken en te typen. Deze tekstwijzigingen blijven wel behouden als je ze in de code-editor doet.</p>
         <p><strong>Permanente Afbeeldingen:</strong> Om afbeeldingen permanent toe te voegen, moet je nog steeds de HTML-code aanpassen en `<img>` tags gebruiken met een link naar de afbeelding (zie commentaar in de code van de eerste kaart).</p>
-        <p>Dit document bevat 20 paren (40 kaarten) klaar om te printen. Vanwege het aantal kaarten worden de voorkanten en achterkanten waarschijnlijk over 3 pagina's per set verdeeld.</p>
+        <p>Dit document bevat 18 paren (36 kaarten) klaar om te printen. Vanwege het aantal kaarten worden de voorkanten en achterkanten waarschijnlijk over 3 pagina's per set verdeeld.</p>
         <ol>
-            <li><strong>Pagina 1-3: Kaart Voorkanten</strong> - Toont icoon/afbeelding + naam OF icoon/afbeelding + afbraaktijd (tekst is bewerkbaar).</li>
-            <li><strong>Pagina 4-6: Kaart Achterkanten</strong> - Toont het ontwerp (🌍) met kleurverloop.</li>
-        </ol>
-        <p><strong>Print Instructies:</strong></p>
-        <ul>
-            <li>Pas eerst de teksten aan zoals gewenst. Sleep eventueel afbeeldingen naar de kaarten.</li>
-            <li><strong>Voor Dubbelzijdig Printen:</strong> Print dit hele document met de dubbelzijdige instelling van uw printer. Kies 'Omdraaien langs lange zijde'. **Zorg ervoor dat 'Achtergronden afdrukken' (of 'Background graphics') is ingeschakeld!**</li>
-            <li><strong>Voor Enkelzijdig Printen:</strong> Print alle pagina's (met achtergronden ingeschakeld). Knip de kaarten uit. Lijm de bijbehorende voor- en achterkanten aan elkaar.</li>
+        <li><b>Nieuwe kaarten toevoegen:</b> Klik op het plus-symbool (<span style="font-size:1.2em;vertical-align:middle;">+</span>) onderaan om eenvoudig een nieuw paar kaarten toe te voegen.<br>
+          <span style="font-size:0.98em; color:#285e61; margin-left:1.2em; display:block;">Elke keer dat je op het plus-symbool klikt, wordt er een nieuw paar kaarten toegevoegd (voor- en achterkant). Je kunt de tekst en afbeelding van deze kaarten direct bewerken, net als bij de bestaande kaarten.</span>
+        </li>
         </ul>
-
-        <div style="margin: 18px 0; padding: 12px; background: #f0f4f8; border-radius: 6px; border-left: 4px solid #38B2AC;">
-          <strong>Licenties & Bronvermelding:</strong>
-          <ul style="margin-top: 8px;">
-            <li><b>Font Awesome Free:</b> Iconen worden geladen via CDN. Licentie: <a href="https://fontawesome.com/license/free" target="_blank" rel="noopener noreferrer">https://fontawesome.com/license/free</a> (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License)</li>
-            <li><b>Vecteezy:</b> Indien je cartoon-afbeeldingen van Vecteezy gebruikt (zoals voorgesteld voor de achterkant), is de volgende bronvermelding vereist volgens hun gratis licentie:<br>
-                <a href="https://www.vecteezy.com/free-vector/earth-cartoon" target="_blank" rel="noopener noreferrer">Earth Cartoon Vectors by Vecteezy</a>
-            </li>
-          </ul>
-        </div>
-
-        <hr>
+      </div>
+    </div>
     </div>
 
     <div class="card-grid" id="grid-fronts">
         <div class="card card-front-content drop-zone">
-            <div class="image-area"> <i class="fas fa-apple-whole" title="Klokhuis"></i> </div>
+            <div class="image-area"><img src="public/apple-svgrepo-com.svg" alt="Klokhuis" class="card-svg"></div>
             <span class="card-text" contenteditable="true">Klokhuis</span>
         </div>
         <div class="card card-front-content drop-zone">
-            <div class="image-area"> <i class="fas fa-apple-whole" title="Klokhuis"></i> </div>
+            <div class="image-area"><img src="public/apple-svgrepo-com.svg" alt="Klokhuis" class="card-svg"></div>
             <span class="card-text" contenteditable="true">± 2 Maanden</span>
         </div>
         <div class="card card-front-content drop-zone">
-            <div class="image-area"> <i class="fas fa-newspaper" title="Oude Krant"></i> </div>
+            <div class="image-area"><img src="public/newspaper-journal-svgrepo-com.svg" alt="Oude Krant" class="card-svg"></div>
             <span class="card-text" contenteditable="true">Oude Krant</span>
         </div>
         <div class="card card-front-content drop-zone">
-            <div class="image-area"> <i class="fas fa-newspaper" title="Oude Krant"></i> </div>
+            <div class="image-area"><img src="public/newspaper-journal-svgrepo-com.svg" alt="Oude Krant" class="card-svg"></div>
             <span class="card-text" contenteditable="true">± 6 Weken</span>
         </div>
         <div class="card card-front-content drop-zone">
-            <div class="image-area"> <i class="fas fa-box-archive" title="Kartonnen Doos"></i> </div>
+            <div class="image-area"><img src="public/beverage-box-svgrepo-com.svg" alt="Kartonnen Doos" class="card-svg"></div>
             <span class="card-text" contenteditable="true">Kartonnen Doos</span>
         </div>
         <div class="card card-front-content drop-zone">
-            <div class="image-area"> <i class="fas fa-box-archive" title="Kartonnen Doos"></i> </div>
+            <div class="image-area"><img src="public/beverage-box-svgrepo-com.svg" alt="Kartonnen Doos" class="card-svg"></div>
             <span class="card-text" contenteditable="true">± 2 Maanden</span>
         </div>
         <div class="card card-front-content drop-zone">
-             <div class="image-area"> <i class="fas fa-bottle-water" title="Plastic Fles"></i> </div>
+             <div class="image-area"><img src="public/water-bottle-svgrepo-com.svg" alt="Plastic Fles" class="card-svg"></div>
             <span class="card-text" contenteditable="true">Plastic Fles</span>
         </div>
         <div class="card card-front-content drop-zone">
-             <div class="image-area"> <i class="fas fa-bottle-water" title="Plastic Fles"></i> </div>
+             <div class="image-area"><img src="public/water-bottle-svgrepo-com.svg" alt="Plastic Fles" class="card-svg"></div>
             <span class="card-text" contenteditable="true">± 450 Jaar</span>
         </div>
         <div class="card card-front-content drop-zone">
-             <div class="image-area"> <i class="fas fa-wine-bottle" title="Glazen Pot"></i> </div>
-            <span class="card-text" contenteditable="true">Glazen Pot</span>
+             <div class="image-area"><img src="public/bottle-glass-recycle-recycling-svgrepo-com.svg" alt="Glazen Fles" class="card-svg"></div>
+            <span class="card-text" contenteditable="true">Glazen Fles</span>
         </div>
         <div class="card card-front-content drop-zone">
-             <div class="image-area"> <i class="fas fa-wine-bottle" title="Glazen Pot"></i> </div>
+             <div class="image-area"><img src="public/bottle-glass-recycle-recycling-svgrepo-com.svg" alt="Glazen Fles" class="card-svg"></div>
             <span class="card-text" contenteditable="true">1 Miljoen+ Jaar</span>
         </div>
         <div class="card card-front-content drop-zone">
-             <div class="image-area"> <i class="fas fa-battery-full" title="Lege Batterij"></i> </div>
+             <div class="image-area"><img src="public/battery-svgrepo-com.svg" alt="Lege Batterij" class="card-svg"></div>
             <span class="card-text" contenteditable="true">Lege Batterij</span>
         </div>
         <div class="card card-front-content drop-zone">
-             <div class="image-area"> <i class="fas fa-battery-full" title="Lege Batterij"></i> </div>
+             <div class="image-area"><img src="public/battery-svgrepo-com.svg" alt="Lege Batterij" class="card-svg"></div>
             <span class="card-text" contenteditable="true">± 100 Jaar</span>
         </div>
         <div class="card card-front-content drop-zone">
-             <div class="image-area"> <i class="fas fa-bag-shopping" title="Plastic Zakje"></i> </div>
+             <div class="image-area"><img src="public/shopping-bag-svgrepo-com.svg" alt="Plastic Zakje" class="card-svg"></div>
             <span class="card-text" contenteditable="true">Plastic Zakje</span>
         </div>
         <div class="card card-front-content drop-zone">
-             <div class="image-area"> <i class="fas fa-bag-shopping" title="Plastic Zakje"></i> </div>
+             <div class="image-area"><img src="public/shopping-bag-svgrepo-com.svg" alt="Plastic Zakje" class="card-svg"></div>
             <span class="card-text" contenteditable="true">Tientallen Jaren</span>
         </div>
          <div class="card card-front-content drop-zone">
-             <div class="image-area"> <i class="fas fa-lightbulb" title="Kapotte Lamp"></i> </div>
+             <div class="image-area"><img src="public/light-bulb-svgrepo-com.svg" alt="Kapotte Lamp" class="card-svg"></div>
             <span class="card-text" contenteditable="true">Kapotte Lamp</span>
         </div>
         <div class="card card-front-content drop-zone">
-             <div class="image-area"> <i class="fas fa-lightbulb" title="Kapotte Lamp"></i> </div>
+             <div class="image-area"><img src="public/light-bulb-svgrepo-com.svg" alt="Kapotte Lamp" class="card-svg"></div>
             <span class="card-text" contenteditable="true">1 Miljoen+ Jaar</span>
         </div>
         <div class="card card-front-content drop-zone">
-             <div class="image-area"> <i class="fas fa-circle" title="Kauwgom"></i> </div>
+             <div class="image-area"><img src="public/gum-svgrepo-com.svg" alt="Kauwgom" class="card-svg"></div>
             <span class="card-text" contenteditable="true">Kauwgom</span>
         </div>
         <div class="card card-front-content drop-zone">
-             <div class="image-area"> <i class="fas fa-circle" title="Kauwgom"></i> </div>
+             <div class="image-area"><img src="public/gum-svgrepo-com.svg" alt="Kauwgom" class="card-svg"></div>
             <span class="card-text" contenteditable="true">± 5 Jaar</span>
         </div>
         <div class="card card-front-content drop-zone">
-             <div class="image-area"> <i class="fas fa-rectangle-list" title="Lege Chipszak"></i> </div>
+             <div class="image-area"><img src="public/chips-snack-svgrepo-com.svg" alt="Lege Chipszak" class="card-svg"></div>
             <span class="card-text" contenteditable="true">Lege Chipszak</span>
         </div>
         <div class="card card-front-content drop-zone">
-             <div class="image-area"> <i class="fas fa-rectangle-list" title="Lege Chipszak"></i> </div>
+             <div class="image-area"><img src="public/chips-snack-svgrepo-com.svg" alt="Lege Chipszak" class="card-svg"></div>
             <span class="card-text" contenteditable="true">± 80 Jaar</span>
         </div>
         <div class="card card-front-content drop-zone">
-             <div class="image-area"> <i class="fas fa-box-tissue" title="Papieren Zakdoek"></i> </div>
+             <div class="image-area"><img src="public/tissue-paper-svgrepo-com.svg" alt="Papieren Zakdoek" class="card-svg"></div>
             <span class="card-text" contenteditable="true">Papieren Zakdoek</span>
         </div>
         <div class="card card-front-content drop-zone">
-             <div class="image-area"> <i class="fas fa-box-tissue" title="Papieren Zakdoek"></i> </div>
+             <div class="image-area"><img src="public/tissue-paper-svgrepo-com.svg" alt="Papieren Zakdoek" class="card-svg"></div>
             <span class="card-text" contenteditable="true">± 3 Weken</span>
         </div>
         <div class="card card-front-content drop-zone">
-             <div class="image-area"> <i class="fas fa-cube" title="Leeg Drinkbrikje"></i> </div>
+             <div class="image-area"><img src="public/beverage-box-svgrepo-com.svg" alt="Leeg Drinkbrikje" class="card-svg"></div>
             <span class="card-text" contenteditable="true">Leeg Drinkbrikje</span>
         </div>
         <div class="card card-front-content drop-zone">
-             <div class="image-area"> <i class="fas fa-cube" title="Leeg Drinkbrikje"></i> </div>
+             <div class="image-area"><img src="public/beverage-box-svgrepo-com.svg" alt="Leeg Drinkbrikje" class="card-svg"></div>
             <span class="card-text" contenteditable="true">± 5 Jaar</span>
         </div>
         <div class="card card-front-content drop-zone">
-             <div class="image-area"> <i class="fas fa-beer-mug-empty" title="Blikje"></i> </div>
+             <div class="image-area"><img src="public/can-soda-svgrepo-com.svg" alt="Blikje" class="card-svg"></div>
             <span class="card-text" contenteditable="true">Blikje</span>
         </div>
         <div class="card card-front-content drop-zone">
-             <div class="image-area"> <i class="fas fa-beer-mug-empty" title="Blikje"></i> </div>
+             <div class="image-area"><img src="public/can-soda-svgrepo-com.svg" alt="Blikje" class="card-svg"></div>
             <span class="card-text" contenteditable="true">± 200 Jaar</span>
         </div>
         <div class="card card-front-content drop-zone">
-             <div class="image-area"> <i class="fas fa-utensils" title="Plastic Vorkje"></i> </div>
+             <div class="image-area"><img src="public/fork-food-kitchen-svgrepo-com.svg" alt="Plastic Vorkje" class="card-svg"></div>
             <span class="card-text" contenteditable="true">Plastic Vorkje</span>
         </div>
         <div class="card card-front-content drop-zone">
-             <div class="image-area"> <i class="fas fa-utensils" title="Plastic Vorkje"></i> </div>
+             <div class="image-area"><img src="public/fork-food-kitchen-svgrepo-com.svg" alt="Plastic Vorkje" class="card-svg"></div>
             <span class="card-text" contenteditable="true">Honderden Jaren</span>
         </div>
         <div class="card card-front-content drop-zone">
-             <div class="image-area"> <i class="fas fa-lemon" title="Appelsienschil"></i> </div>
+             <div class="image-area"><img src="public/lemon-svgrepo-com.svg" alt="Appelsienschil" class="card-svg"></div>
             <span class="card-text" contenteditable="true">Appelsienschil</span>
         </div>
         <div class="card card-front-content drop-zone">
-             <div class="image-area"> <i class="fas fa-lemon" title="Appelsienschil"></i> </div>
+             <div class="image-area"><img src="public/lemon-svgrepo-com.svg" alt="Appelsienschil" class="card-svg"></div>
             <span class="card-text" contenteditable="true">± 6 Maanden</span>
         </div>
         <div class="card card-front-content drop-zone">
-             <div class="image-area"> <i class="fas fa-shirt" title="T-shirt"></i> </div>
+             <div class="image-area"><img src="public/shirt-svgrepo-com.svg" alt="T-shirt" class="card-svg"></div>
             <span class="card-text" contenteditable="true">T-shirt</span>
         </div>
         <div class="card card-front-content drop-zone">
-             <div class="image-area"> <i class="fas fa-shirt" title="T-shirt"></i> </div>
+             <div class="image-area"><img src="public/shirt-svgrepo-com.svg" alt="T-shirt" class="card-svg"></div>
             <span class="card-text" contenteditable="true">± 5 Maanden</span>
         </div>
         <div class="card card-front-content drop-zone">
-             <div class="image-area"> <i class="fas fa-socks" title="Sok"></i> </div>
+             <div class="image-area"><img src="public/socks-svgrepo-com.svg" alt="Sok" class="card-svg"></div>
             <span class="card-text" contenteditable="true">Sok</span>
         </div>
         <div class="card card-front-content drop-zone">
-             <div class="image-area"> <i class="fas fa-socks" title="Sok"></i> </div>
+             <div class="image-area"><img src="public/socks-svgrepo-com.svg" alt="Sok" class="card-svg"></div>
             <span class="card-text" contenteditable="true">± 1-5 Jaar</span>
         </div>
         <div class="card card-front-content drop-zone">
-             <div class="image-area"> <i class="fas fa-puzzle-piece" title="Lego Blokje"></i> </div>
+             <div class="image-area"><img src="public/lego-svgrepo-com.svg" alt="Lego Blokje" class="card-svg"></div>
             <span class="card-text" contenteditable="true">Lego Blokje</span>
         </div>
         <div class="card card-front-content drop-zone">
-             <div class="image-area"> <i class="fas fa-puzzle-piece" title="Lego Blokje"></i> </div>
+             <div class="image-area"><img src="public/lego-svgrepo-com.svg" alt="Lego Blokje" class="card-svg"></div>
             <span class="card-text" contenteditable="true">Honderden Jaren+</span>
         </div>
         <div class="card card-front-content drop-zone">
-             <div class="image-area"> <i class="fas fa-grip-lines" title="Zilverpapier"></i> </div>
-            <span class="card-text" contenteditable="true">Zilverpapier</span>
-        </div>
-        <div class="card card-front-content drop-zone">
-             <div class="image-area"> <i class="fas fa-grip-lines" title="Zilverpapier"></i> </div>
-            <span class="card-text" contenteditable="true">Bijna Nooit</span>
-        </div>
-        <div class="card card-front-content drop-zone">
-             <div class="image-area"> <i class="fas fa-fill-drip" title="Leeg Verfblik"></i> </div>
+             <div class="image-area"><img src="public/paint-bucket-svgrepo-com.svg" alt="Leeg Verfblik" class="card-svg"></div>
             <span class="card-text" contenteditable="true">Leeg Verfblik</span>
         </div>
         <div class="card card-front-content drop-zone">
-             <div class="image-area"> <i class="fas fa-fill-drip" title="Leeg Verfblik"></i> </div>
+             <div class="image-area"><img src="public/paint-bucket-svgrepo-com.svg" alt="Leeg Verfblik" class="card-svg"></div>
             <span class="card-text" contenteditable="true">± 50 Jaar</span>
         </div>
     </div>
 
-
-    <div class="card-grid" id="grid-backs">
-         <div class="card card-back-content"><img src="public/vecteezy_save-our-planet-logo-on-earth-globe-with-nature-trees_5921849.svg" alt="Achterkant afbeelding" class="back-image"></div> <div class="card card-back-content"><img src="public/vecteezy_save-our-planet-logo-on-earth-globe-with-nature-trees_5921849.svg" alt="Achterkant afbeelding" class="back-image"></div> <div class="card card-back-content"><img src="public/vecteezy_save-our-planet-logo-on-earth-globe-with-nature-trees_5921849.svg" alt="Achterkant afbeelding" class="back-image"></div> <div class="card card-back-content"><img src="public/vecteezy_save-our-planet-logo-on-earth-globe-with-nature-trees_5921849.svg" alt="Achterkant afbeelding" class="back-image"></div>
-         <div class="card card-back-content"><img src="public/vecteezy_save-our-planet-logo-on-earth-globe-with-nature-trees_5921849.svg" alt="Achterkant afbeelding" class="back-image"></div> <div class="card card-back-content"><img src="public/vecteezy_save-our-planet-logo-on-earth-globe-with-nature-trees_5921849.svg" alt="Achterkant afbeelding" class="back-image"></div> <div class="card card-back-content"><img src="public/vecteezy_save-our-planet-logo-on-earth-globe-with-nature-trees_5921849.svg" alt="Achterkant afbeelding" class="back-image"></div> <div class="card card-back-content"><img src="public/vecteezy_save-our-planet-logo-on-earth-globe-with-nature-trees_5921849.svg" alt="Achterkant afbeelding" class="back-image"></div>
-         <div class="card card-back-content"><img src="public/vecteezy_save-our-planet-logo-on-earth-globe-with-nature-trees_5921849.svg" alt="Achterkant afbeelding" class="back-image"></div> <div class="card card-back-content"><img src="public/vecteezy_save-our-planet-logo-on-earth-globe-with-nature-trees_5921849.svg" alt="Achterkant afbeelding" class="back-image"></div> <div class="card card-back-content"><img src="public/vecteezy_save-our-planet-logo-on-earth-globe-with-nature-trees_5921849.svg" alt="Achterkant afbeelding" class="back-image"></div> <div class="card card-back-content"><img src="public/vecteezy_save-our-planet-logo-on-earth-globe-with-nature-trees_5921849.svg" alt="Achterkant afbeelding" class="back-image"></div>
-         <div class="card card-back-content"><img src="public/vecteezy_save-our-planet-logo-on-earth-globe-with-nature-trees_5921849.svg" alt="Achterkant afbeelding" class="back-image"></div> <div class="card card-back-content"><img src="public/vecteezy_save-our-planet-logo-on-earth-globe-with-nature-trees_5921849.svg" alt="Achterkant afbeelding" class="back-image"></div> <div class="card card-back-content"><img src="public/vecteezy_save-our-planet-logo-on-earth-globe-with-nature-trees_5921849.svg" alt="Achterkant afbeelding" class="back-image"></div> <div class="card card-back-content"><img src="public/vecteezy_save-our-planet-logo-on-earth-globe-with-nature-trees_5921849.svg" alt="Achterkant afbeelding" class="back-image"></div>
-         <div class="card card-back-content"><img src="public/vecteezy_save-our-planet-logo-on-earth-globe-with-nature-trees_5921849.svg" alt="Achterkant afbeelding" class="back-image"></div> <div class="card card-back-content"><img src="public/vecteezy_save-our-planet-logo-on-earth-globe-with-nature-trees_5921849.svg" alt="Achterkant afbeelding" class="back-image"></div> <div class="card card-back-content"><img src="public/vecteezy_save-our-planet-logo-on-earth-globe-with-nature-trees_5921849.svg" alt="Achterkant afbeelding" class="back-image"></div> <div class="card card-back-content"><img src="public/vecteezy_save-our-planet-logo-on-earth-globe-with-nature-trees_5921849.svg" alt="Achterkant afbeelding" class="back-image"></div>
-         <div class="card card-back-content"><img src="public/vecteezy_save-our-planet-logo-on-earth-globe-with-nature-trees_5921849.svg" alt="Achterkant afbeelding" class="back-image"></div> <div class="card card-back-content"><img src="public/vecteezy_save-our-planet-logo-on-earth-globe-with-nature-trees_5921849.svg" alt="Achterkant afbeelding" class="back-image"></div> <div class="card card-back-content"><img src="public/vecteezy_save-our-planet-logo-on-earth-globe-with-nature-trees_5921849.svg" alt="Achterkant afbeelding" class="back-image"></div> <div class="card card-back-content"><img src="public/vecteezy_save-our-planet-logo-on-earth-globe-with-nature-trees_5921849.svg" alt="Achterkant afbeelding" class="back-image"></div>
-         <div class="card card-back-content"><img src="public/vecteezy_save-our-planet-logo-on-earth-globe-with-nature-trees_5921849.svg" alt="Achterkant afbeelding" class="back-image"></div> <div class="card card-back-content"><img src="public/vecteezy_save-our-planet-logo-on-earth-globe-with-nature-trees_5921849.svg" alt="Achterkant afbeelding" class="back-image"></div> <div class="card card-back-content"><img src="public/vecteezy_save-our-planet-logo-on-earth-globe-with-nature-trees_5921849.svg" alt="Achterkant afbeelding" class="back-image"></div> <div class="card card-back-content"><img src="public/vecteezy_save-our-planet-logo-on-earth-globe-with-nature-trees_5921849.svg" alt="Achterkant afbeelding" class="back-image"></div>
-         <div class="card card-back-content"><img src="public/vecteezy_save-our-planet-logo-on-earth-globe-with-nature-trees_5921849.svg" alt="Achterkant afbeelding" class="back-image"></div> <div class="card card-back-content"><img src="public/vecteezy_save-our-planet-logo-on-earth-globe-with-nature-trees_5921849.svg" alt="Achterkant afbeelding" class="back-image"></div> <div class="card card-back-content"><img src="public/vecteezy_save-our-planet-logo-on-earth-globe-with-nature-trees_5921849.svg" alt="Achterkant afbeelding" class="back-image"></div> <div class="card card-back-content"><img src="public/vecteezy_save-our-planet-logo-on-earth-globe-with-nature-trees_5921849.svg" alt="Achterkant afbeelding" class="back-image"></div>
-         <div class="card card-back-content"><img src="public/vecteezy_save-our-planet-logo-on-earth-globe-with-nature-trees_5921849.svg" alt="Achterkant afbeelding" class="back-image"></div> <div class="card card-back-content"><img src="public/vecteezy_save-our-planet-logo-on-earth-globe-with-nature-trees_5921849.svg" alt="Achterkant afbeelding" class="back-image"></div> <div class="card card-back-content"><img src="public/vecteezy_save-our-planet-logo-on-earth-globe-with-nature-trees_5921849.svg" alt="Achterkant afbeelding" class="back-image"></div> <div class="card card-back-content"><img src="public/vecteezy_save-our-planet-logo-on-earth-globe-with-nature-trees_5921849.svg" alt="Achterkant afbeelding" class="back-image"></div>
-         <div class="card card-back-content"><img src="public/vecteezy_save-our-planet-logo-on-earth-globe-with-nature-trees_5921849.svg" alt="Achterkant afbeelding" class="back-image"></div> <div class="card card-back-content"><img src="public/vecteezy_save-our-planet-logo-on-earth-globe-with-nature-trees_5921849.svg" alt="Achterkant afbeelding" class="back-image"></div> <div class="card card-back-content"><img src="public/vecteezy_save-our-planet-logo-on-earth-globe-with-nature-trees_5921849.svg" alt="Achterkant afbeelding" class="back-image"></div> <div class="card card-back-content"><img src="public/vecteezy_save-our-planet-logo-on-earth-globe-with-nature-trees_5921849.svg" alt="Achterkant afbeelding" class="back-image"></div>
+    <!-- Add Card Pair Outline -->
+    <div class="card-grid add-outline-grid" id="add-card-pair-outline" style="margin-top: 8px; grid-template-columns: 1fr; justify-items: center;">
+      <div class="card card-front-content add-outline" style="border: 2px dashed #38B2AC; cursor:pointer; display:flex; flex-direction:column; align-items:center; justify-content:center; padding: 8px 4px 8px 4px; min-height: 120px;">
+        <span style="font-size:2.2em; color:#38B2AC; line-height:1; margin-bottom: 4px;">+</span>
+        <div class="card-text" style="text-align:center; pointer-events:none; user-select:none; margin:0; padding:0; font-size:0.4em;">Voeg kaarten toe</div>
+      </div>
     </div>
+
+    <div class="card-grid" id="grid-backs"></div>
+    <template id="back-card-template">
+        <div class="card card-back-content">
+            <img src="public/vecteezy_save-our-planet-logo-on-earth-globe-with-nature-trees_5921849.svg" alt="Achterkant afbeelding" class="back-image">
+        </div>
+    </template>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const template = document.getElementById('back-card-template');
+            const gridBacks = document.getElementById('grid-backs');
+            for (let i = 0; i < 36; i++) {
+                gridBacks.appendChild(template.content.cloneNode(true));
+            }
+
+            // --- Add Card Pair Logic ---
+            const addOutline = document.getElementById('add-card-pair-outline');
+            const addBtnCard = addOutline.querySelector('.add-outline');
+            const gridFronts = document.getElementById('grid-fronts');
+            addBtnCard.addEventListener('click', function() {
+                // Create two new front cards
+                for (let i = 0; i < 2; i++) {
+                    const card = document.createElement('div');
+                    card.className = 'card card-front-content drop-zone';
+                    card.innerHTML = `<div class="image-area"></div><span class="card-text" contenteditable="true"></span>`;
+                    gridFronts.appendChild(card);
+                }
+                // Add two new backs
+                for (let i = 0; i < 2; i++) {
+                    gridBacks.appendChild(template.content.cloneNode(true));
+                }
+                // Optionally scroll to the new cards
+                gridFronts.lastElementChild.scrollIntoView({behavior:'smooth', block:'center'});
+            });
+        });
+    </script>
 
     <script>
         document.addEventListener('DOMContentLoaded', () => {
@@ -646,16 +604,23 @@ background-position: center;
         }
         btn.addEventListener('click', function() {
             const backs = document.querySelectorAll('#grid-backs .card.card-back-content');
-            console.log('Found backs:', backs.length);
-            const tealActive = backs.length && backs[0].classList.contains('teal-back');
-            backs.forEach(card => card.classList.toggle('teal-back'));
-            if (!tealActive) {
-                btn.textContent = 'Wissel naar wit';
-            } else {
-                btn.textContent = 'Wissel achterkant';
-            }
+            backs.forEach(card => {
+                const img = card.querySelector('.back-image');
+                if (img) {
+                    // Toggle between two SVGs
+                    const current = img.getAttribute('src');
+                    if (current.includes('vecteezy_save-our-planet-logo')) {
+                        img.setAttribute('src', 'public/cartoon-earth.svg');
+                    } else {
+                        img.setAttribute('src', 'public/vecteezy_save-our-planet-logo-on-earth-globe-with-nature-trees_5921849.svg');
+                    }
+                }
+            });
+            // Optionally update button text if you want to reflect which SVG is shown
+            // btn.textContent = 'Wissel achterkant';
         });
     });
 </script>
+
 </body>
 </html>
