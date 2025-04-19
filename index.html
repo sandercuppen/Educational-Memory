@@ -20,7 +20,7 @@ body.bg-teal {
     transition: background 0.5s;
 }
 body.bg-teal::before {
-    content: '\1F30D'; /* Earth Globe Europe-Africa emoji */
+    content: ''; /* Earth Globe Europe-Africa emoji */
     font-size: 13vw;
     position: fixed;
     left: 50%;
@@ -29,8 +29,11 @@ body.bg-teal::before {
     opacity: 0.10;
     pointer-events: none;
     z-index: 0;
-    font-family: 'Apple Color Emoji', 'Segoe UI Emoji', 'Noto Color Emoji', 'Android Emoji', 'EmojiSymbols', sans-serif;
-    text-shadow: 0 4px 24px rgba(56,178,172,0.12);
+    background-image: url('public/cartoon-earth.svg');
+background-size: contain;
+background-repeat: no-repeat;
+background-position: center;
+    /* No text-shadow for maximum clarity */
 }
 
 
@@ -138,7 +141,7 @@ body.bg-teal::before {
             min-height: 1.5em; /* Ensure space for editing */
             cursor: text; /* Indicate text is editable */
             color: #555; /* Keep text color dark grey */
-            z-index: 1; /* Ensure text is above image if overlap occurs */
+            z-index: 10; /* Ensure text is above image if overlap occurs */
         }
 
         /* Style for the icon element on front cards */
@@ -178,20 +181,52 @@ body.bg-teal::before {
 
         /* --- Specific Styling for Back Cards --- */
         .card.card-back-content {
-            background-image: linear-gradient(to bottom, #4FD1C5, #38B2AC);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            padding: 0;
-        }
-        .card.card-back-content .back-image {
-            max-width: 80%;
-            max-height: 80%;
-            display: block;
-            margin: auto;
-            filter: drop-shadow(0 2px 6px rgba(44, 62, 80, 0.12));
-        }
+    background: #fff !important;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0;
+    position: relative;
+    transition: background 0.4s;
+}
+.card.card-back-content .back-image {
+    max-width: 80%;
+    max-height: 80%;
+    display: block;
+    margin: auto;
+    filter: drop-shadow(0 2px 6px rgba(44, 62, 80, 0.12));
+    transition: opacity 0.3s;
+    opacity: 1;
+    pointer-events: auto;
+    /* No blend mode */
+}
 
+.card.card-back-content.teal-back {
+    background: linear-gradient(120deg, #4ca8b0 0%, #B2F5EA 100%) !important;
+}
+.card.card-back-content.teal-back .back-image {
+    opacity: 0;
+    pointer-events: none;
+}
+.card.card-back-content.teal-back::after {
+    content: ''; /* Earth Globe Europe-Africa emoji */
+    width: 60%;
+height: 60%;
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    opacity: 1;
+    pointer-events: none;
+    z-index: 10;
+    background-image: url('public/cartoon-earth.svg');
+background-size: contain;
+background-repeat: no-repeat;
+background-position: center;
+    /* No text-shadow for maximum clarity */
+}
+
+            
         /* --- Print Styles (Optimized for A4 paper) --- */
         @media print {
             body {
@@ -278,34 +313,38 @@ body.bg-teal::before {
     transition: background 0.4s;
 }
 .card.card-back-content .back-image {
-    position: relative;
-    z-index: 1;
     max-width: 80%;
     max-height: 80%;
     display: block;
     margin: auto;
     filter: drop-shadow(0 2px 6px rgba(44, 62, 80, 0.12));
     transition: opacity 0.3s;
+    /* No blend mode, no z-index, no position */
 }
+
 .card.card-back-content.teal-back {
-    background: linear-gradient(to bottom, #4FD1C5, #38B2AC) !important;
+    background: linear-gradient(to bottom, #234E52 0%, #B2F5EA 100%) !important;
 }
 .card.card-back-content.teal-back .back-image {
     opacity: 0;
     pointer-events: none;
 }
 .card.card-back-content.teal-back::after {
-    content: '\1F30D'; /* Earth Globe Europe-Africa emoji */
-    font-size: 4em;
+    content: ''; /* Earth Globe Europe-Africa emoji */
+    width: 60%;
+height: 60%;
     position: absolute;
     left: 50%;
     top: 50%;
     transform: translate(-50%, -50%);
-    opacity: 0.17;
+    opacity: 1;
     pointer-events: none;
-    z-index: 1;
-    font-family: 'Apple Color Emoji', 'Segoe UI Emoji', 'Noto Color Emoji', 'Android Emoji', 'EmojiSymbols', sans-serif;
-    text-shadow: 0 4px 24px rgba(56,178,172,0.12);
+    z-index: 10;
+    background-image: url('public/cartoon-earth.svg');
+background-size: contain;
+background-repeat: no-repeat;
+background-position: center;
+    /* No text-shadow for maximum clarity */
 }
 
             
@@ -599,16 +638,23 @@ body.bg-teal::before {
     </script>
 
  <script>
-    const btn = document.getElementById('toggle-back-card');
-    btn.addEventListener('click', function() {
-        const backs = document.querySelectorAll('.card.card-back-content');
-        const tealActive = backs.length && backs[0].classList.contains('teal-back');
-        backs.forEach(card => card.classList.toggle('teal-back'));
-        if (!tealActive) {
-            btn.textContent = 'Wissel naar wit';
-        } else {
-            btn.textContent = 'Wissel achterkant';
+    document.addEventListener('DOMContentLoaded', function() {
+        const btn = document.getElementById('toggle-back-card');
+        if (!btn) {
+            console.error('Toggle button not found!');
+            return;
         }
+        btn.addEventListener('click', function() {
+            const backs = document.querySelectorAll('#grid-backs .card.card-back-content');
+            console.log('Found backs:', backs.length);
+            const tealActive = backs.length && backs[0].classList.contains('teal-back');
+            backs.forEach(card => card.classList.toggle('teal-back'));
+            if (!tealActive) {
+                btn.textContent = 'Wissel naar wit';
+            } else {
+                btn.textContent = 'Wissel achterkant';
+            }
+        });
     });
 </script>
 </body>
