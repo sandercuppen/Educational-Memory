@@ -158,11 +158,18 @@
 
         /* --- Specific Styling for Back Cards --- */
         .card.card-back-content {
-            /* Adjusted gradient direction to vertical */
             background-image: linear-gradient(to bottom, #4FD1C5, #38B2AC);
-            color: #fff; /* White icon */
-            /* Font size for emoji */
-            font-size: 3em;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 0;
+        }
+        .card.card-back-content .back-image {
+            max-width: 80%;
+            max-height: 80%;
+            display: block;
+            margin: auto;
+            filter: drop-shadow(0 2px 6px rgba(44, 62, 80, 0.12));
         }
 
         /* --- Print Styles (Optimized for A4 paper) --- */
@@ -241,12 +248,19 @@
 
             /* Style Back cards for print */
             .card.card-back-content {
-                 /* Ensure adjusted gradient prints */
                  background-image: linear-gradient(to bottom, #4FD1C5, #38B2AC) !important;
-                 color: #fff !important;
-                 /* Emoji size for print */
-                 font-size: 2.5em;
-                 border-color: #8B4513 !important; /* Keep original border color */
+                 border-color: #8B4513 !important;
+                 display: flex;
+                 align-items: center;
+                 justify-content: center;
+                 padding: 0;
+            }
+            .card.card-back-content .back-image {
+                 max-width: 80%;
+                 max-height: 80%;
+                 display: block;
+                 margin: auto;
+                 filter: drop-shadow(0 2px 6px rgba(44, 62, 80, 0.12));
             }
         }
     </style>
@@ -450,16 +464,16 @@
 
 
     <div class="card-grid" id="grid-backs">
-         <div class="card card-back-content">🌍</div> <div class="card card-back-content">🌍</div> <div class="card card-back-content">🌍</div> <div class="card card-back-content">🌍</div>
-         <div class="card card-back-content">🌍</div> <div class="card card-back-content">🌍</div> <div class="card card-back-content">🌍</div> <div class="card card-back-content">🌍</div>
-         <div class="card card-back-content">🌍</div> <div class="card card-back-content">🌍</div> <div class="card card-back-content">🌍</div> <div class="card card-back-content">🌍</div>
-         <div class="card card-back-content">🌍</div> <div class="card card-back-content">🌍</div> <div class="card card-back-content">🌍</div> <div class="card card-back-content">🌍</div>
-         <div class="card card-back-content">🌍</div> <div class="card card-back-content">🌍</div> <div class="card card-back-content">🌍</div> <div class="card card-back-content">🌍</div>
-         <div class="card card-back-content">🌍</div> <div class="card card-back-content">🌍</div> <div class="card card-back-content">🌍</div> <div class="card card-back-content">🌍</div>
-         <div class="card card-back-content">🌍</div> <div class="card card-back-content">🌍</div> <div class="card card-back-content">🌍</div> <div class="card card-back-content">🌍</div>
-         <div class="card card-back-content">🌍</div> <div class="card card-back-content">🌍</div> <div class="card card-back-content">🌍</div> <div class="card card-back-content">🌍</div>
-         <div class="card card-back-content">🌍</div> <div class="card card-back-content">🌍</div> <div class="card card-back-content">🌍</div> <div class="card card-back-content">🌍</div>
-         <div class="card card-back-content">🌍</div> <div class="card card-back-content">🌍</div> <div class="card card-back-content">🌍</div> <div class="card card-back-content">🌍</div>
+         <div class="card card-back-content"><img src="public/82xvp5vo.png" alt="Achterkant afbeelding" class="back-image"></div> <div class="card card-back-content"><img src="public/82xvp5vo.png" alt="Achterkant afbeelding" class="back-image"></div> <div class="card card-back-content"><img src="public/82xvp5vo.png" alt="Achterkant afbeelding" class="back-image"></div> <div class="card card-back-content"><img src="public/82xvp5vo.png" alt="Achterkant afbeelding" class="back-image"></div>
+         <div class="card card-back-content"><img src="public/82xvp5vo.png" alt="Achterkant afbeelding" class="back-image"></div> <div class="card card-back-content"><img src="public/82xvp5vo.png" alt="Achterkant afbeelding" class="back-image"></div> <div class="card card-back-content"><img src="public/82xvp5vo.png" alt="Achterkant afbeelding" class="back-image"></div> <div class="card card-back-content"><img src="public/82xvp5vo.png" alt="Achterkant afbeelding" class="back-image"></div>
+         <div class="card card-back-content"><img src="public/82xvp5vo.png" alt="Achterkant afbeelding" class="back-image"></div> <div class="card card-back-content"><img src="public/82xvp5vo.png" alt="Achterkant afbeelding" class="back-image"></div> <div class="card card-back-content"><img src="public/82xvp5vo.png" alt="Achterkant afbeelding" class="back-image"></div> <div class="card card-back-content"><img src="public/82xvp5vo.png" alt="Achterkant afbeelding" class="back-image"></div>
+         <div class="card card-back-content"><img src="public/82xvp5vo.png" alt="Achterkant afbeelding" class="back-image"></div> <div class="card card-back-content"><img src="public/82xvp5vo.png" alt="Achterkant afbeelding" class="back-image"></div> <div class="card card-back-content"><img src="public/82xvp5vo.png" alt="Achterkant afbeelding" class="back-image"></div> <div class="card card-back-content"><img src="public/82xvp5vo.png" alt="Achterkant afbeelding" class="back-image"></div>
+         <div class="card card-back-content"><img src="public/82xvp5vo.png" alt="Achterkant afbeelding" class="back-image"></div> <div class="card card-back-content"><img src="public/82xvp5vo.png" alt="Achterkant afbeelding" class="back-image"></div> <div class="card card-back-content"><img src="public/82xvp5vo.png" alt="Achterkant afbeelding" class="back-image"></div> <div class="card card-back-content"><img src="public/82xvp5vo.png" alt="Achterkant afbeelding" class="back-image"></div>
+         <div class="card card-back-content"><img src="public/82xvp5vo.png" alt="Achterkant afbeelding" class="back-image"></div> <div class="card card-back-content"><img src="public/82xvp5vo.png" alt="Achterkant afbeelding" class="back-image"></div> <div class="card card-back-content"><img src="public/82xvp5vo.png" alt="Achterkant afbeelding" class="back-image"></div> <div class="card card-back-content"><img src="public/82xvp5vo.png" alt="Achterkant afbeelding" class="back-image"></div>
+         <div class="card card-back-content"><img src="public/82xvp5vo.png" alt="Achterkant afbeelding" class="back-image"></div> <div class="card card-back-content"><img src="public/82xvp5vo.png" alt="Achterkant afbeelding" class="back-image"></div> <div class="card card-back-content"><img src="public/82xvp5vo.png" alt="Achterkant afbeelding" class="back-image"></div> <div class="card card-back-content"><img src="public/82xvp5vo.png" alt="Achterkant afbeelding" class="back-image"></div>
+         <div class="card card-back-content"><img src="public/82xvp5vo.png" alt="Achterkant afbeelding" class="back-image"></div> <div class="card card-back-content"><img src="public/82xvp5vo.png" alt="Achterkant afbeelding" class="back-image"></div> <div class="card card-back-content"><img src="public/82xvp5vo.png" alt="Achterkant afbeelding" class="back-image"></div> <div class="card card-back-content"><img src="public/82xvp5vo.png" alt="Achterkant afbeelding" class="back-image"></div>
+         <div class="card card-back-content"><img src="public/82xvp5vo.png" alt="Achterkant afbeelding" class="back-image"></div> <div class="card card-back-content"><img src="public/82xvp5vo.png" alt="Achterkant afbeelding" class="back-image"></div> <div class="card card-back-content"><img src="public/82xvp5vo.png" alt="Achterkant afbeelding" class="back-image"></div> <div class="card card-back-content"><img src="public/82xvp5vo.png" alt="Achterkant afbeelding" class="back-image"></div>
+         <div class="card card-back-content"><img src="public/82xvp5vo.png" alt="Achterkant afbeelding" class="back-image"></div> <div class="card card-back-content"><img src="public/82xvp5vo.png" alt="Achterkant afbeelding" class="back-image"></div> <div class="card card-back-content"><img src="public/82xvp5vo.png" alt="Achterkant afbeelding" class="back-image"></div> <div class="card card-back-content"><img src="public/82xvp5vo.png" alt="Achterkant afbeelding" class="back-image"></div>
     </div>
 
     <script>
