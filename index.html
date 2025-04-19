@@ -8,11 +8,31 @@
     <style>
         /* --- General Body Styling --- */
         body {
-            font-family: sans-serif;
-            margin: 20px;
-            background-color: #f4f4f4; /* Light background for screen view */
-            color: #333;
-        }
+    font-family: sans-serif;
+    margin: 20px;
+    color: #333;
+    background: #fff;
+    transition: background 0.5s;
+}
+body.bg-teal {
+    background: linear-gradient(120deg, #38B2AC 0%, #4FD1C5 100%);
+    position: relative;
+    transition: background 0.5s;
+}
+body.bg-teal::before {
+    content: '\1F30D'; /* Earth Globe Europe-Africa emoji */
+    font-size: 13vw;
+    position: fixed;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    opacity: 0.10;
+    pointer-events: none;
+    z-index: 0;
+    font-family: 'Apple Color Emoji', 'Segoe UI Emoji', 'Noto Color Emoji', 'Android Emoji', 'EmojiSymbols', sans-serif;
+    text-shadow: 0 4px 24px rgba(56,178,172,0.12);
+}
+
 
         /* --- Screen Instructions Styling --- */
         .screen-instructions {
@@ -248,26 +268,55 @@
 
             /* Style Back cards for print */
             .card.card-back-content {
-                 background-image: linear-gradient(to bottom, #4FD1C5, #38B2AC) !important;
-                 border-color: #8B4513 !important;
-                 display: flex;
-                 align-items: center;
-                 justify-content: center;
-                 padding: 0;
-            }
-            .card.card-back-content .back-image {
-                 max-width: 80%;
-                 max-height: 80%;
-                 display: block;
-                 margin: auto;
-                 filter: drop-shadow(0 2px 6px rgba(44, 62, 80, 0.12));
-            }
+    background: #fff !important;
+    border-color: #8B4513 !important;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0;
+    position: relative;
+    transition: background 0.4s;
+}
+.card.card-back-content .back-image {
+    position: relative;
+    z-index: 1;
+    max-width: 80%;
+    max-height: 80%;
+    display: block;
+    margin: auto;
+    filter: drop-shadow(0 2px 6px rgba(44, 62, 80, 0.12));
+    transition: opacity 0.3s;
+}
+.card.card-back-content.teal-back {
+    background: linear-gradient(to bottom, #4FD1C5, #38B2AC) !important;
+}
+.card.card-back-content.teal-back .back-image {
+    opacity: 0;
+    pointer-events: none;
+}
+.card.card-back-content.teal-back::after {
+    content: '\1F30D'; /* Earth Globe Europe-Africa emoji */
+    font-size: 4em;
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    opacity: 0.17;
+    pointer-events: none;
+    z-index: 1;
+    font-family: 'Apple Color Emoji', 'Segoe UI Emoji', 'Noto Color Emoji', 'Android Emoji', 'EmojiSymbols', sans-serif;
+    text-shadow: 0 4px 24px rgba(56,178,172,0.12);
+}
+
+            
         }
     </style>
 </head>
 <body>
+    
 
     <div class="screen-instructions">
+    <button id="toggle-back-card" style="float: right; margin-left: 18px; background: #38B2AC; color: #fff; border: none; border-radius: 6px; padding: 8px 14px; font-size: 1em; cursor: pointer; box-shadow: 0 2px 8px rgba(56,178,172,0.09); transition: background 0.2s;">Wissel achterkant</button>
         <h1>Eco Memorie: Educatief spel met afbraaktijd van afval (20 Paren)</h1>
         <p>Combineer het afvalitem met de tijd die het nodig heeft om af te breken!</p>
         <p><strong>Nieuw - Drag & Drop Afbeeldingen:</strong> Je kunt nu een PNG- of JPG-afbeelding van je computer direct op een kaartje slepen om het icoontje te vervangen! </p>
@@ -549,5 +598,18 @@
         });
     </script>
 
- </body>
+ <script>
+    const btn = document.getElementById('toggle-back-card');
+    btn.addEventListener('click', function() {
+        const backs = document.querySelectorAll('.card.card-back-content');
+        const tealActive = backs.length && backs[0].classList.contains('teal-back');
+        backs.forEach(card => card.classList.toggle('teal-back'));
+        if (!tealActive) {
+            btn.textContent = 'Wissel naar wit';
+        } else {
+            btn.textContent = 'Wissel achterkant';
+        }
+    });
+</script>
+</body>
 </html>
