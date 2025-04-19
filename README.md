@@ -44,9 +44,9 @@ Dit project is een statische HTML-pagina en kan eenvoudig gehost worden via [Git
 
 Dit project wordt uitgegeven onder de **MIT Licentie**. Zie het `LICENSE` bestand voor details.
 
-Dit project maakt gebruik van:
+## Bronvermelding & Licenties
 
+* **SVG Repo:** Illustraties van afvalsoorten. [https://www.svgrepo.com/](https://www.svgrepo.com/)
 * **Font Awesome Free:** Iconen worden geladen via CDN. Licentie: [https://fontawesome.com/license/free](https://fontawesome.com/license/free) (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License)
-* **Vecteezy:** Indien je cartoon-afbeeldingen van Vecteezy gebruikt (zoals voorgesteld voor de achterkant), is de volgende bronvermelding vereist volgens hun gratis licentie:
-    * [Earth Cartoon Vectors by Vecteezy](https://www.vecteezy.com/free-vector/earth-cartoon)
+* **Vecteezy:** Cartoon-afbeeldingen achterkant. [Earth Cartoon Vectors by Vecteezy](https://www.vecteezy.com/free-vector/earth-cartoon)
 
