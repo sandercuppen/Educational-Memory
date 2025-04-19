@@ -313,7 +313,7 @@
         <p><strong>LET OP:</strong> Afbeeldingen die je via drag & drop toevoegt zijn **TIJDELIJK** en worden **NIET OPGESLAGEN** in de code. Als je de pagina ververst of sluit, zijn ze weg. Dit is handig om snel te testen voor het printen.</p>
         <p><strong>Tekst Bewerken:</strong> Je kunt nog steeds de teksten (namen en tijden) aanpassen door erop te klikken en te typen. Deze tekstwijzigingen blijven wel behouden als je ze in de code-editor doet.</p>
         <p><strong>Permanente Afbeeldingen:</strong> Om afbeeldingen permanent toe te voegen, moet je nog steeds de HTML-code aanpassen en `<img>` tags gebruiken met een link naar de afbeelding (zie commentaar in de code van de eerste kaart).</p>
-        <p>Dit document bevat 18 paren (36 kaarten) klaar om te printen. Vanwege het aantal kaarten worden de voorkanten en achterkanten waarschijnlijk over 3 pagina's per set verdeeld.</p>
+        <p>Dit document bevat 19 paren (38 kaarten) klaar om te printen. Vanwege het aantal kaarten worden de voorkanten en achterkanten waarschijnlijk over 3 pagina's per set verdeeld.</p>
         <ol>
         <li><b>Nieuwe kaarten toevoegen:</b> Klik op het plus-symbool (<span style="font-size:1.2em;vertical-align:middle;">+</span>) onderaan om eenvoudig een nieuw paar kaarten toe te voegen.<br>
           <span style="font-size:0.98em; color:#285e61; margin-left:1.2em; display:block;">Elke keer dat je op het plus-symbool klikt, wordt er een nieuw paar kaarten toegevoegd (voor- en achterkant). Je kunt de tekst en afbeelding van deze kaarten direct bewerken, net als bij de bestaande kaarten.</span>
@@ -496,7 +496,7 @@
         document.addEventListener('DOMContentLoaded', function() {
             const template = document.getElementById('back-card-template');
             const gridBacks = document.getElementById('grid-backs');
-            for (let i = 0; i < 36; i++) {
+            for (let i = 0; i < 38; i++) {
                 gridBacks.appendChild(template.content.cloneNode(true));
             }
 
